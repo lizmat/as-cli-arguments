@@ -1,0 +1,3 @@
+use as-cli-arguments;
+my %*SUB-MAIN-OPTS = :named-anywhere;
+sub MAIN(|c) { say as-cli-arguments c }

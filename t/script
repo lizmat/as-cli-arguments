@@ -1,0 +1,2 @@
+use as-cli-arguments;
+sub MAIN(|c) { say as-cli-arguments c }

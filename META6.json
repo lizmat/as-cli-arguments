@@ -1,0 +1,27 @@
+{
+  "auth": "zef:lizmat",
+  "authors": [
+    "Elizabeth Mattijsen"
+  ],
+  "build-depends": [
+  ],
+  "depends": [
+  ],
+  "description": "stringify a Capture as command-line arguments",
+  "license": "Artistic-2.0",
+  "name": "as-cli-arguments",
+  "perl": "6.d",
+  "provides": {
+    "as-cli-arguments": "lib/as-cli-arguments.rakumod"
+  },
+  "resources": [
+  ],
+  "source-url": "https://github.com/lizmat/as-cli-arguments.git",
+  "tags": [
+    "CLI",
+    "UTILITY"
+  ],
+  "test-depends": [
+  ],
+  "version": "0.0.1"
+}

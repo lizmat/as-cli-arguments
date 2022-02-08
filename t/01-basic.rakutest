@@ -1,0 +1,25 @@
+use Test;
+
+plan 8;
+
+my $raku    := $*EXECUTABLE.absolute;
+my $script  := $*PROGRAM.sibling("script").absolute;
+my $script2 := $*PROGRAM.sibling("script-named-anywhere").absolute;
+
+my sub test($script, @arguments, $expected) {
+    is (run $raku, '-I.', $script, @arguments, :merge).out.slurp(:close).chomp,
+      $expected,
+      "do @arguments give $expected?";
+}
+
+test $script, <foo bar baz>,    "foo bar baz";
+test $script, <--foo bar baz>,  "--foo bar baz";
+test $script, <--/foo bar baz>, "--/foo bar baz";
+test $script, <--foo=bar baz>,  "--foo=bar baz";
+
+test $script2, <foo bar baz>,    "foo bar baz";
+test $script2, <--foo bar baz>,  "bar baz --foo";
+test $script2, <--/foo bar baz>, "bar baz --/foo";
+test $script2, <--foo=bar baz>,  "baz --foo=bar";
+
+# vim: expandtab shiftwidth=4
