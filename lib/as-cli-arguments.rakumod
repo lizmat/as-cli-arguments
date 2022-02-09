@@ -1,6 +1,6 @@
 
 my sub stringify(str $_ --> Str:D) {
-    .contains(/ \W /) ?? "'$_'" !! $_.Str
+    .contains(/ \s /) ?? "'$_'" !! $_.Str
 }
 
 my sub as-cli-arguments(
