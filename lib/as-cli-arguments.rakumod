@@ -1,28 +1,34 @@
-
 my sub stringify(str $_ --> Str:D) {
-    .contains(/ \s /) ?? "'$_'" !! $_.Str
+    .contains(/ \W /) ?? "'$_'" !! $_.Str
 }
-
-my sub as-cli-arguments(
-  Capture:D  $c,
-  Bool:D    :$named-anywhere = %*SUB-MAIN-OPTS<named-anywhere> // False,
---> Str:D) is export {
-
-    my str $positionals = $c.list.map(*.&stringify).join(" ");
-
-    my str $nameds = $c.hash.kv.map(-> $key, $value {
+my sub nameds(%nameds --> Str:D) {
+    %nameds.sort.map(-> (:$key, :$value) {
         my str $name = stringify $key;
         $value ~~ Bool
           ?? $value
             ?? "--$name"
             !! "--/$name"
           !! "--$name=&stringify($value)"
-    }).join(" ");
+    }).join(" ")
+}
 
-    my str $space = $positionals && $nameds ?? " " !! "";
+my proto sub as-cli-arguments($, |) is export {*}
+my multi sub as-cli-arguments(
+  Capture:D  $c,
+     Bool:D :$named-anywhere = %*SUB-MAIN-OPTS<named-anywhere> // False,
+--> Str:D) {
+
+    my str $positionals = $c.list.map(*.&stringify).join(" ");
+    my str $nameds      = nameds $c.hash;
+    my str $space       = $positionals && $nameds ?? " " !! "";
+
     $named-anywhere
-      ?? "$positionals$space$nameds"
-      !! "$nameds$space$positionals"
+      ?? $positionals ~ $space ~ $nameds
+      !! $nameds ~ $space ~ $positionals
+}
+
+my multi sub as-cli-arguments(%nameds --> Str:D) {
+    nameds %nameds
 }
 
 =begin pod
@@ -46,21 +52,29 @@ use as-cli-arguments;
 my %*SUB-MAIN-OPTS = :named-anywhere;
 sub MAIN(|c) { say as-cli-arguments c }
 
+sub MAIN(*@pos, :$foo, :$bar, *%_) {
+    die "Found unexpected named arguments: &as-cli-arguments(%_)"
+      if %_;
+}
+
 =end code
 
 =head1 DESCRIPTION
 
-as-cli-arguments exports a single subroutine C<as-cli-arguments> that takes
-a C<Capture> object, and returns a string that represents the contents of
-the C<Capture> as command line arguments.
+as-cli-arguments exports a single subroutine C<as-cli-arguments> that
+takes either a C<Capture> object or a hash with named arguments, and
+returns a string that represents the contents of the C<Capture> as
+command line arguments.
 
-The subroutine also takes an optional named arguments C<:named-anywhere> to
-indicate whether or not the "named arguments anywhere" mode should be assumed.
-By default, this will use the C<%*SUB-MAIN-OPTS<named-anywhere>> setting,
-if available.  Else it will default to C<False>.
+If a C<Capture> object is specified, then The subroutine also takes
+an optional named arguments C<:named-anywhere> to indicate whether or
+not the "named arguments anywhere" mode should be assumed.  By default,
+this will use the C<%*SUB-MAIN-OPTS<named-anywhere>> setting, if
+available.  Else it will default to C<False>.
 
-This is mainly intended as a helper subroutine for command-line scripts and
-modules that want to give feedback about the given (or perceived) arguments.
+This is mainly intended as a helper subroutine for command-line scripts
+and modules that want to give feedback about the given or perceived or
+unexpected command line parameters.
 
 =head1 AUTHOR
 

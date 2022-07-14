@@ -19,9 +19,10 @@
   "source-url": "https://github.com/lizmat/as-cli-arguments.git",
   "tags": [
     "CLI",
-    "UTILITY"
+    "UTILITY",
+    "ARGUMENTS"
   ],
   "test-depends": [
   ],
-  "version": "0.0.2"
+  "version": "0.0.3"
 }

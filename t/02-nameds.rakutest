@@ -1,0 +1,9 @@
+use as-cli-arguments;
+use Test;
+
+plan 1;
+
+my %nameds = :foo, :bar<baz>, :!zip;
+is as-cli-arguments(%nameds), "--bar=baz --foo --/zip", 'are the args ok';
+
+# vim: expandtab shiftwidth=4

@@ -17,16 +17,21 @@ sub MAIN(|c) { say as-cli-arguments c, :named-anywhere }
 use as-cli-arguments;
 my %*SUB-MAIN-OPTS = :named-anywhere;
 sub MAIN(|c) { say as-cli-arguments c }
+
+sub MAIN(*@pos, :$foo, :$bar, *%_) {
+    die "Found unexpected named arguments: &as-cli-arguments(%_)"
+      if %_;
+}
 ```
 
 DESCRIPTION
 ===========
 
-as-cli-arguments exports a single subroutine `as-cli-arguments` that takes a `Capture` object, and returns a string that represents the contents of the `Capture` as command line arguments.
+as-cli-arguments exports a single subroutine `as-cli-arguments` that takes either a `Capture` object or a hash with named arguments, and returns a string that represents the contents of the `Capture` as command line arguments.
 
-The subroutine also takes an optional named arguments `:named-anywhere` to indicate whether or not the "named arguments anywhere" mode should be assumed. By default, this will use the `%*SUB-MAIN-OPTS<named-anywhere>` setting, if available. Else it will default to `False`.
+If a `Capture` object is specified, then The subroutine also takes an optional named arguments `:named-anywhere` to indicate whether or not the "named arguments anywhere" mode should be assumed. By default, this will use the `%*SUB-MAIN-OPTS<named-anywhere>` setting, if available. Else it will default to `False`.
 
-This is mainly intended as a helper subroutine for command-line scripts and modules that want to give feedback about the given (or perceived) arguments.
+This is mainly intended as a helper subroutine for command-line scripts and modules that want to give feedback about the given or perceived or unexpected command line parameters.
 
 AUTHOR
 ======

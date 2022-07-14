@@ -1,3 +1,4 @@
+use as-cli-arguments;
 use Test;
 
 plan 8;
