@@ -1,7 +1,7 @@
 use as-cli-arguments;
 use Test;
 
-plan 8;
+plan 12;
 
 my $raku    := $*EXECUTABLE.absolute;
 my $script  := $*PROGRAM.sibling("script").absolute;
@@ -13,14 +13,18 @@ my sub test($script, @arguments, $expected) {
       "do @arguments give $expected?";
 }
 
-test $script, <foo bar baz>,    "foo bar baz";
-test $script, <--foo bar baz>,  "--foo bar baz";
-test $script, <--/foo bar baz>, "--/foo bar baz";
-test $script, <--foo=bar baz>,  "--foo=bar baz";
+test $script, <foo bar baz>,      "foo bar baz";
+test $script, <--foo bar baz>,    "--foo bar baz";
+test $script, <--/foo bar baz>,   "--/foo bar baz";
+test $script, <--foo=bar baz>,    "--foo=bar baz";
+test $script, ('--=bar', 'baz'),  "--=bar baz";
+test $script, ('--=', 'baz'),     "--= baz";
 
-test $script2, <foo bar baz>,    "foo bar baz";
-test $script2, <--foo bar baz>,  "bar baz --foo";
-test $script2, <--/foo bar baz>, "bar baz --/foo";
-test $script2, <--foo=bar baz>,  "baz --foo=bar";
+test $script2, <foo bar baz>,     "foo bar baz";
+test $script2, <--foo bar baz>,   "bar baz --foo";
+test $script2, <--/foo bar baz>,  "bar baz --/foo";
+test $script2, <--foo=bar baz>,   "baz --foo=bar";
+test $script2, ('--=bar', 'baz'), "baz --=bar";
+test $script2, ('--=', 'baz'),    "baz --=";
 
 # vim: expandtab shiftwidth=4
