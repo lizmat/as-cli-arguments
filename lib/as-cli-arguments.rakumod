@@ -37,6 +37,9 @@ my multi sub as-cli-arguments(
 my multi sub as-cli-arguments(%nameds --> Str:D) {
     nameds %nameds
 }
+my multi sub as-cli-arguments(@nameds --> Str:D) {
+    @nameds.map(&named).join(" ")
+}
 my multi sub as-cli-arguments(Pair:D $named --> Str:D) {
     named $named
 }
@@ -73,6 +76,8 @@ sub MAIN(*@pos, :$foo, :$bar, *%_) {
 
 say as-cli-arguments { :42a, :666b }  # --a=42 --b=666
 
+say as-cli-arguments (:42a, :666b)    # --a=42 --b=666
+
 say as-cli-arguments "a" => 42;       # --a=42
 
 =end code
@@ -80,9 +85,9 @@ say as-cli-arguments "a" => 42;       # --a=42
 =head1 DESCRIPTION
 
 as-cli-arguments exports a single subroutine C<as-cli-arguments> that
-takes either a C<Capture> object, a hash with named arguments, or a
-C<Pair> and returns a string that represents the contents of the argument
-given as if it were command line arguments.
+takes either a C<Capture> object, a hash with named arguments, a C<Pair>
+or a list of C<Pair>s and returns a string that represents the contents
+of the argument given as if they were command line arguments.
 
 If a C<Capture> object is specified, then the subroutine also takes
 an optional named arguments C<:named-anywhere> to indicate whether or

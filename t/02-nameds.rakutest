@@ -4,13 +4,15 @@ use Test;
 my @nameds  = Pair.new("",Any), :bar<baz>, :foo, :!zip;
 my @strings = <--= --bar=baz --foo --/zip>;
 
-plan @nameds + 1;
+plan @nameds + 2;
 
 for @nameds.kv -> $i, $pair {
     is as-cli-arguments($pair), @strings[$i], "is '$pair.key()' ok?";
 }
 
+is as-cli-arguments(@nameds), @strings, 'are the args in a list ok';
+
 my %nameds = @nameds;
-is as-cli-arguments(%nameds), @strings, 'are the args ok';
+is as-cli-arguments(%nameds), @strings, 'are the args in a hash ok';
 
 # vim: expandtab shiftwidth=4

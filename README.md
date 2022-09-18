@@ -27,13 +27,15 @@ sub MAIN(*@pos, :$foo, :$bar, *%_) {
 ```raku
 say as-cli-arguments { :42a, :666b }  # --a=42 --b=666
 
+say as-cli-arguments (:42a, :666b)    # --a=42 --b=666
+
 say as-cli-arguments "a" => 42;       # --a=42
 ```
 
 DESCRIPTION
 ===========
 
-as-cli-arguments exports a single subroutine `as-cli-arguments` that takes either a `Capture` object, a hash with named arguments, or a `Pair` and returns a string that represents the contents of the argument given as if it were command line arguments.
+as-cli-arguments exports a single subroutine `as-cli-arguments` that takes either a `Capture` object, a hash with named arguments, a `Pair` or a list of `Pair`s and returns a string that represents the contents of the argument given as if they were command line arguments.
 
 If a `Capture` object is specified, then the subroutine also takes an optional named arguments `:named-anywhere` to indicate whether or not the "named arguments anywhere" mode should be assumed. By default, this will use the `%*SUB-MAIN-OPTS<named-anywhere>` setting, if available. Else it will default to `False`.
 

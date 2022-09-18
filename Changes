@@ -2,6 +2,9 @@ Revision history for as-cli-arguments
 
 {{$NEXT}}
 
+0.0.6  2022-09-18T12:29:38+02:00
+    - Add support for a list of Pairs
+
 0.0.5  2022-09-18T12:22:34+02:00
     - Add support for Pair
 
