@@ -1,11 +1,16 @@
 use as-cli-arguments;
 use Test;
 
-plan 1;
+my @nameds  = Pair.new("",Any), :bar<baz>, :foo, :!zip;
+my @strings = <--= --bar=baz --foo --/zip>;
 
-my %nameds = :foo, :bar<baz>, :!zip, Pair.new("",Any);
-is as-cli-arguments(%nameds),
-  "--= --bar=baz --foo --/zip",
-  'are the args ok';
+plan @nameds + 1;
+
+for @nameds.kv -> $i, $pair {
+    is as-cli-arguments($pair), @strings[$i], "is '$pair.key()' ok?";
+}
+
+my %nameds = @nameds;
+is as-cli-arguments(%nameds), @strings, 'are the args ok';
 
 # vim: expandtab shiftwidth=4

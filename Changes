@@ -2,6 +2,9 @@ Revision history for as-cli-arguments
 
 {{$NEXT}}
 
+0.0.5  2022-09-18T12:22:34+02:00
+    - Add support for Pair
+
 0.0.4  2022-07-24T14:07:50+02:00
     - Gracefully handle unnamed named arguments (aka --=)
     - Gracefully handle type objects as key or value in nameds

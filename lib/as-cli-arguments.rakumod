@@ -5,15 +5,18 @@ my multi sub stringify($_ --> Str:D) {
         !! $_
       !! ""
 }
+my sub named(Pair:D $pair) {
+    my str $name = stringify $pair.key;
+    my $value   := $pair.value;
+
+    $value ~~ Bool
+      ?? $value
+        ?? "--$name"
+        !! "--/$name"
+      !! "--$name=&stringify($value)"
+}
 my sub nameds(%nameds --> Str:D) {
-    %nameds.sort.map(-> (:$key, :$value) {
-        my str $name = stringify $key;
-        $value ~~ Bool
-          ?? $value
-            ?? "--$name"
-            !! "--/$name"
-          !! "--$name=&stringify($value)"
-    }).join(" ")
+    %nameds.sort.map(&named).join(" ")
 }
 
 my proto sub as-cli-arguments($, |) is export {*}
@@ -33,6 +36,9 @@ my multi sub as-cli-arguments(
 
 my multi sub as-cli-arguments(%nameds --> Str:D) {
     nameds %nameds
+}
+my multi sub as-cli-arguments(Pair:D $named --> Str:D) {
+    named $named
 }
 
 =begin pod
@@ -63,14 +69,22 @@ sub MAIN(*@pos, :$foo, :$bar, *%_) {
 
 =end code
 
+=begin code :lang<raku>
+
+say as-cli-arguments { :42a, :666b }  # --a=42 --b=666
+
+say as-cli-arguments "a" => 42;       # --a=42
+
+=end code
+
 =head1 DESCRIPTION
 
 as-cli-arguments exports a single subroutine C<as-cli-arguments> that
-takes either a C<Capture> object or a hash with named arguments, and
-returns a string that represents the contents of the C<Capture> as
-command line arguments.
+takes either a C<Capture> object, a hash with named arguments, or a
+C<Pair> and returns a string that represents the contents of the argument
+given as if it were command line arguments.
 
-If a C<Capture> object is specified, then The subroutine also takes
+If a C<Capture> object is specified, then the subroutine also takes
 an optional named arguments C<:named-anywhere> to indicate whether or
 not the "named arguments anywhere" mode should be assumed.  By default,
 this will use the C<%*SUB-MAIN-OPTS<named-anywhere>> setting, if
