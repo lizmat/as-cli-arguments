@@ -2,6 +2,9 @@ Revision history for as-cli-arguments
 
 {{$NEXT}}
 
+0.0.7  2022-10-13T11:58:49+02:00
+    - Only quote values that have whitespace in them
+
 0.0.6  2022-09-18T12:29:38+02:00
     - Add support for a list of Pairs
 

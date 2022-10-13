@@ -1,6 +1,6 @@
 my multi sub stringify($_ --> Str:D) {
     .defined
-      ?? .contains(/ \W /)
+      ?? .contains(/ \s | ':' /)
         ?? "'$_'"
         !! $_
       !! ""
