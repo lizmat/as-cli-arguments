@@ -1,6 +1,9 @@
 Revision history for as-cli-arguments
 
 {{$NEXT}}
+    - update copyright year
+    - Add separate CI badges for each OS
+    - Add sponsor button
 
 0.0.7  2022-10-13T11:58:49+02:00
     - Only quote values that have whitespace in them
