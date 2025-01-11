@@ -1,3 +1,4 @@
 .precomp/
 /as-cli-arguments-*
 /releases/
+*.rakucov
