@@ -2,6 +2,9 @@ Revision history for as-cli-arguments
 
 {{$NEXT}}
 
+0.0.9  2025-05-01T00:56:35+02:00
+    - Update copyright year
+
 0.0.8  2024-07-29T14:20:15+02:00
     - Update copyright year
     - Add separate CI badges for each OS
