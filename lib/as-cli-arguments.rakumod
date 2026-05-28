@@ -11,7 +11,7 @@ my sub named(Pair:D $pair) {
 
     $value ~~ Bool
       ?? $value
-        ?? "--$name"
+        ?? "--$name"  # UNCOVERABLE
         !! "--/$name"
       !! "--$name=&stringify($value)"
 }
@@ -30,7 +30,7 @@ my multi sub as-cli-arguments(
     my str $space       = $positionals && $nameds ?? " " !! "";
 
     $named-anywhere
-      ?? $positionals ~ $space ~ $nameds
+      ?? $positionals ~ $space ~ $nameds  # UNCOVERABLE
       !! $nameds ~ $space ~ $positionals
 }
 

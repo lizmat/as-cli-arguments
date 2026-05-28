@@ -7,14 +7,11 @@ as-cli-arguments - stringify a Capture as command-line arguments
 =head1 SYNOPSIS
 
 =begin code :lang<raku>
-
 use as-cli-arguments;
 sub MAIN(|c) { say as-cli-arguments c, :named-anywhere }
-
 =end code
 
 =begin code :lang<raku>
-
 use as-cli-arguments;
 my %*SUB-MAIN-OPTS = :named-anywhere;
 sub MAIN(|c) { say as-cli-arguments c }
@@ -23,17 +20,14 @@ sub MAIN(*@pos, :$foo, :$bar, *%_) {
     die "Found unexpected named arguments: &as-cli-arguments(%_)"
       if %_;
 }
-
 =end code
 
 =begin code :lang<raku>
-
 say as-cli-arguments { :42a, :666b }  # --a=42 --b=666
 
 say as-cli-arguments (:42a, :666b)    # --a=42 --b=666
 
 say as-cli-arguments "a" => 42;       # --a=42
-
 =end code
 
 =head1 DESCRIPTION
@@ -67,7 +61,7 @@ deal to me!
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2022, 2024, 2025 Elizabeth Mattijsen
+Copyright 2022, 2024, 2025, 2026 Elizabeth Mattijsen
 
 This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
 
