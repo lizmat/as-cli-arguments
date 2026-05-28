@@ -1,6 +1,8 @@
 Revision history for as-cli-arguments
 
 {{$NEXT}}
+
+0.0.10  2026-05-28T14:10:28+02:00
     - Full coverage testing
     - Modernize META
     - Update copyright year

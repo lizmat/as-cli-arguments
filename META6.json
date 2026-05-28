@@ -3,6 +3,8 @@
   "authors": [
     "Elizabeth Mattijsen"
   ],
+  "build-depends": [
+  ],
   "depends": [
   ],
   "description": "stringify a Capture as command-line arguments",
@@ -12,6 +14,9 @@
     "as-cli-arguments": "lib/as-cli-arguments.rakumod"
   },
   "raku": "6.d",
+  "resources": [
+  ],
+  "source-url": "https://github.com/lizmat/as-cli-arguments.git",
   "support": {
     "bugtracker": "https://github.com/lizmat/as-cli-arguments/issues",
     "email": "liz@raku.rocks",
@@ -22,5 +27,7 @@
     "UTILITY",
     "ARGUMENTS"
   ],
-  "version": "0.0.9"
+  "test-depends": [
+  ],
+  "version": "0.0.10"
 }
